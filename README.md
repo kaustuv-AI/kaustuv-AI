@@ -1,10 +1,35 @@
-- 👋 Hi, I’m @kaustuv-AI
-- 👀 I’m interested in web-dev
-- 🌱 I’m currently learning front end 
-- 💞️ I’m looking to collaborate on ...
-- 📫 How to reach me kaustuv.mohanty2911@gmail.com
+<h1 align="center">Hi 👋, I'm Kaustuv Mohanty</h1>
+<h3 align="center">Technical Co-Founder | AI • Machine Learning • Robotics • Manufacturing Systems</h3>
 
-<!---
-kaustuv-AI/kaustuv-AI is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
-You can click the Preview link to take a look at your changes.
---->
+<p align="center">
+Building technology at the intersection of <b>Artificial Intelligence, Robotics, and Industrial Engineering</b>
+</p>
+
+<p align="center">
+<a href="https://www.linkedin.com/in/k-mohanty/">
+<img src="https://img.shields.io/badge/LinkedIn-Kaustuv%20Mohanty-blue?style=for-the-badge&logo=linkedin"/>
+</a>
+</p>
+
+---
+
+# 🚀 About Me
+
+- 🧠 Technical Co-Founder building engineering-driven products  
+- 🤖 Interested in **AI systems, Deep Neural Networks, and Robotics**  
+- 🏭 Exploring **manufacturing technology and industrial automation**  
+- ⚡ Love **vibe coding → rapid prototyping and shipping ideas quickly**  
+- 🔬 Focused on building **real-world engineering systems**
+
+---
+
+# 🧠 Core Interests
+
+-Artificial Intelligence
+-Machine Learning
+-Deep Neural Networks
+-Robotics Systems
+-Computer Vision
+-Manufacturing Technologies
+-Industrial Automation
+-Engineering Systems

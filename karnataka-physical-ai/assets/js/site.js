@@ -53,7 +53,7 @@
       io.unobserve(el);
     });
   }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
-  $$('.reveal, .proof__img').forEach(function (el) { io.observe(el); });
+  $$('.reveal, .proof__img, .chapter').forEach(function (el) { io.observe(el); });
   // masked lines are clipped to nothing, so observe their (unclipped) parent instead
   $$('.reveal-line').forEach(function (l) { var h = l.parentElement; if (!h.dataset.rlHost) { h.dataset.rlHost = 1; io.observe(h); } });
   $$('[data-count]').forEach(function (el) { if (!el.closest('.reveal')) io.observe(el); });
@@ -275,8 +275,11 @@
       $('#mp-inst').textContent = r.inst;
       $('#mp-focus').innerHTML = r.focus + ' <span class="pv pv--pro">Proposal</span>';
       $('#mp-node').innerHTML = r.node + ' <span class="pv pv--pro">Proposed · not approved</span>';
-      panel.classList.remove('swap'); void panel.offsetWidth;
+      window.KA_REGION = id;
+      doc.dispatchEvent(new CustomEvent('map:select', { detail: id }));
     }
+    window.KA_SELECT = selectRegion;
+    window.KA_REGIONS = REGIONS;
     selectRegion('Bengaluru');
 
     // pilot mini map
@@ -318,7 +321,7 @@
       eq: 'Edge-compute stations (Jetson-class) · GPU workstations · camera and LiDAR calibration rig',
       sk: 'Computer vision · sensor fusion · model deployment on edge hardware · collecting data from robots',
       pr: 'Object detection for picking · LiDAR obstacle mapping · visual defect inspection',
-      area: '150–200 sq ft', areaTag: 'asm', img: 'assets/img/tbot.webp', cap: 'T-Bot · LiDAR + IMU + Jetson' },
+      area: '150–200 sq ft', areaTag: 'asm', img: 'assets/img/tbot-maze.webp', cap: 'T-Bot · LiDAR + IMU + Jetson', pos: '22% 82%' },
     z5: { k: 'Zone 05 · 150–200 sq ft', n: 'Embedded + IIoT', p: 'The electronics underneath every robot — and the network that lets machines report on themselves.',
       eq: 'Microcontroller and sensor benches · motor drivers · IoT gateways · bench instruments',
       sk: 'Embedded C · motor control · communication buses · IIoT telemetry',
@@ -328,7 +331,7 @@
       eq: '3D printing and fabrication · assembly and test benches · briefing area with smart board, projector and AV',
       sk: 'Mechanical design · rapid prototyping · test and documentation · presenting engineering work',
       pr: 'Capstone builds · train-the-trainer sessions · industry demo days',
-      area: '250–300 sq ft R&D + 300–400 sq ft common workspace', areaTag: 'co', img: 'assets/img/mentor-humanoid.webp', cap: 'Mentor-led humanoid demonstration' }
+      area: '250–300 sq ft R&D + 300–400 sq ft common workspace', areaTag: 'co', img: 'assets/img/forklift-amr.webp', cap: 'Forklift AMR prototype, built in-house', pos: '55% 66%' }
   };
   var TAG = { co: '<span class="pv pv--co">Company-reported</span>', asm: '<span class="pv pv--asm">Assumption</span>' };
 
@@ -382,7 +385,7 @@
       else {
         var z = ZONES[id];
         inner.innerHTML = '<p class="bp__pk">' + z.k + '</p><h3 class="bp__pn">' + z.n + '</h3><p class="bp__pp">' + z.p + '</p>' +
-          (z.img ? '<figure class="bp__ph"><img src="' + z.img + '" alt=""><figcaption>Real photo · ' + z.cap + '</figcaption></figure>' : '') +
+          (z.img ? '<figure class="bp__ph"><img src="' + z.img + '" alt="" style="object-position:' + (z.pos || '50% 60%') + '"><figcaption>Real photo · ' + z.cap + '</figcaption></figure>' : '') +
           '<dl class="bp__dl">' + row('Equipment', z.eq) + row('Skills', z.sk) + row('Projects', z.pr) + row('Indicative area', z.area + ' ' + TAG[z.areaTag]) + '</dl>';
       }
       bpPanel.classList.remove('swap');
@@ -478,11 +481,14 @@
   /* ------------------------------------------------------------------
      Journey
      ------------------------------------------------------------------ */
-  var jSteps = $$('.journey__steps li'), jImgs = $$('.journey__frame img'), jMeter = $('#jr-meter');
+  var jSteps = $$('.journey__steps li'), jMeter = $('#jr-meter'), jWhen = $('#jr-when'), jName = $('#jr-name');
   function setStep(i) {
     jSteps.forEach(function (s, k) { s.classList.toggle('on', k === i); });
-    jImgs.forEach(function (im) { im.classList.toggle('on', +im.dataset.step === i); });
     jMeter.style.width = ((i + 1) / jSteps.length * 100) + '%';
+    jWhen.textContent = $('.journey__when', jSteps[i]).textContent;
+    jName.textContent = $('h3', jSteps[i]).textContent;
+    window.KA_STEP = i;
+    doc.dispatchEvent(new CustomEvent('journey:step', { detail: i }));
   }
   var jio = new IntersectionObserver(function (en) {
     en.forEach(function (e) { if (e.isIntersecting) setStep(jSteps.indexOf(e.target)); });
@@ -535,4 +541,6 @@
   addEventListener('load', function () { sizeRoad(); req(); });
   if (doc.fonts && doc.fonts.ready) doc.fonts.ready.then(function () { sizeRoad(); req(); });
   sizeRoad(); frame();
+  window.KA_PROGRESS = progressOf;
+  window.KA_TICK = req;
 })();

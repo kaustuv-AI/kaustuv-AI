@@ -39,6 +39,12 @@
   <div class="nav__progress" aria-hidden="true"><i></i></div>
 </header>
 
+<div class="rail" id="rail" aria-hidden="true">
+  <span class="rail__n" id="rail-n">00</span>
+  <i class="rail__bar"><b id="rail-b"></b></i>
+  <span class="rail__t" id="rail-t">Opening</span>
+</div>
+
 <div class="menu" id="menu" hidden>
   <nav aria-label="Chapters (mobile)">
     <a href="#opportunity"><small>02</small>The Opportunity</a>
@@ -90,6 +96,7 @@
 <!-- ============================== CH 01 — THE WORLD CHANGED ============================== -->
 <section class="shift scrolly" id="ch01" data-tone="dark" aria-labelledby="ch01-t">
   <div class="scrolly__stage">
+    <div class="gl gl--shift" aria-hidden="true"><canvas id="gl-shift"></canvas></div>
     <div class="wrap shift__in">
       <p class="chapter"><span>Ch. 01</span>The world changed</p>
       <h2 class="shift__lead" id="ch01-t"><span class="serif">AI used to live</span> <span class="serif">on a screen.</span></h2>
@@ -218,7 +225,7 @@
 
   <div class="gap__split">
     <figure class="gap__photo reveal">
-      <img src="assets/img/students-quadruped.webp" alt="Students gathered around a quadruped robot during a My Equation session" loading="lazy" width="436" height="327">
+      <img src="assets/img/quadrupeds.webp" alt="Two quadruped robots built in the My Equation lab" loading="lazy" width="1054" height="1400" style="object-position:55% 62%">
       <blockquote class="gap__quote">
         <p>“I know Python.<br>I know machine learning.</p>
         <p class="gold">I’ve never built a&nbsp;robot.”</p>
@@ -340,6 +347,7 @@
       </div>
       <div class="map__canvas">
         <div class="map__stamp"><span class="pv pv--pro">Proposed network</span> Indicative locations — none approved</div>
+        <div class="gl gl--map" aria-hidden="true"><canvas id="gl-map"></canvas></div>
         <div id="ka-map" class="map__svg" aria-hidden="true"></div>
       </div>
       <aside class="map__panel" aria-live="polite">
@@ -399,9 +407,9 @@
   <h2 class="sr" id="proof-t">Evidence: real robots built and run by My Equation</h2>
 
   <div class="proof__band proof__band--a">
-    <figure class="proof__img proof__img--xl parallax"><img src="assets/img/tbot-maze.webp" alt="Two T-Bot robots navigating an AprilTag-marked maze arena" loading="lazy" style="object-position:40% 62%"></figure>
+    <figure class="proof__img proof__img--xl"><img src="assets/img/so-arm-set.webp" alt="A set of 6-DOF S/O Arm manipulators printed and assembled in-house" loading="lazy" style="object-position:50% 62%"></figure>
     <p class="proof__word"><span class="reveal-line">Engineered.</span></p>
-    <figure class="proof__img proof__img--side"><img src="assets/img/so-arm-set.webp" alt="A set of 6-DOF S/O Arm manipulators printed and assembled in-house" loading="lazy"><figcaption><b>S/O Arm classroom set.</b> 6-DOF arms printed and assembled in-house, one per learner team.</figcaption></figure>
+    <p class="proof__cap"><b>S/O Arm classroom set.</b> Six-axis arms designed, printed and assembled in-house. One per learner team, ±0.1 mm repeatability.</p>
   </div>
 
   <div class="proof__band proof__band--b">
@@ -412,22 +420,19 @@
 
   <div class="proof__band proof__band--c">
     <p class="proof__word"><span class="reveal-line">Deployed.</span></p>
-    <div class="proof__mosaic">
-      <figure><img src="assets/img/mentor-humanoid.webp" alt="A My Equation mentor demonstrating a humanoid robot to a room" loading="lazy"><figcaption>Mentor-led humanoid demonstration</figcaption></figure>
-      <figure><img src="assets/img/drone-student.webp" alt="A student inspecting a quadcopter drone system" loading="lazy"><figcaption>Drone systems, hands-on</figcaption></figure>
-      <figure><img src="assets/img/team-robots.webp" alt="The My Equation team with their robots at an exhibition" loading="lazy"><figcaption>The team behind the machines</figcaption></figure>
-    </div>
+    <figure class="proof__img proof__img--wide"><img src="assets/img/tbot-maze.webp" alt="Two T-Bot robots navigating an AprilTag-marked maze arena on their own" loading="lazy" style="object-position:45% 68%"><figcaption><b>T-Bot fleet, running autonomously.</b> LiDAR robots mapping and navigating an AprilTag-marked warehouse layout.</figcaption></figure>
   </div>
 
   <div class="wrap plates">
     <h3 class="plates__t"><span class="reveal-line">Real robots.</span> <span class="reveal-line serif-i gold">Real experience.</span></h3>
     <p class="plates__k"><span class="pv pv--co">Company-reported specifications</span> Education-grade platforms designed, printed and run by My Equation.</p>
     <ol class="plates__list">
-      <li class="reveal"><img src="assets/img/campus-robot.webp" alt="Campus Robot" loading="lazy"><span class="plates__no">Plate 01</span><b>Campus Robot</b><span class="mono">LiDAR + SLAM · 15 kg payload · 8 h runtime</span></li>
-      <li class="reveal"><img src="assets/img/tbot.webp" alt="T-Bot" loading="lazy"><span class="plates__no">Plate 02</span><b>T-Bot</b><span class="mono">ROS 2 mapping · LiDAR + IMU · Jetson</span></li>
-      <li class="reveal"><img src="assets/img/so-arm.webp" alt="S/O Arm manipulators" loading="lazy"><span class="plates__no">Plate 03</span><b>S/O Arm</b><span class="mono">6-DOF · ±0.1 mm repeatability</span></li>
-      <li class="reveal"><img src="assets/img/qbot.webp" alt="Quadruped Q-Bot" loading="lazy"><span class="plates__no">Plate 04</span><b>Quadruped &amp; Q-Bot</b><span class="mono">ROS 2 legged gait · 1 kHz PID / LQR</span></li>
+      <li class="reveal"><div class="plates__img"><img src="assets/img/tbot-maze.webp" alt="T-Bot" loading="lazy" style="object-position:22% 82%"></div><span class="plates__no">Plate 01</span><b>T-Bot</b><span class="mono">ROS 2 mapping · LiDAR + IMU · Jetson</span></li>
+      <li class="reveal"><div class="plates__img"><img src="assets/img/so-arm-set.webp" alt="S/O Arm manipulators" loading="lazy" style="object-position:45% 62%"></div><span class="plates__no">Plate 02</span><b>S/O Arm</b><span class="mono">6-DOF · ±0.1 mm repeatability</span></li>
+      <li class="reveal"><div class="plates__img"><img src="assets/img/quadrupeds.webp" alt="Quadruped Q-Bot" loading="lazy" style="object-position:62% 62%"></div><span class="plates__no">Plate 03</span><b>Quadruped &amp; Q-Bot</b><span class="mono">ROS 2 legged gait · 1 kHz PID / LQR</span></li>
+      <li class="reveal"><div class="plates__img"><img src="assets/img/forklift-amr.webp" alt="Forklift AMR" loading="lazy" style="object-position:55% 66%"></div><span class="plates__no">Plate 04</span><b>Forklift AMR</b><span class="mono">Aluminium frame · lead-screw lift</span></li>
     </ol>
+    <p class="plates__more"><span class="mono">Also in the fleet</span> <b>Campus Robot</b> LiDAR + SLAM · 15 kg payload · 8 h runtime</p>
   </div>
 </section>
 
@@ -698,14 +703,8 @@
   <div class="journey__grid wrap">
     <div class="journey__media" aria-hidden="true">
       <div class="journey__frame">
-        <img src="assets/img/students-quadruped.webp" alt="" data-step="0" class="on">
-        <img src="assets/img/tbot.webp" alt="" data-step="1" loading="lazy">
-        <img src="assets/img/tbot-maze.webp" alt="" data-step="2" loading="lazy">
-        <img src="assets/img/campus-robot.webp" alt="" data-step="3" loading="lazy">
-        <img src="assets/img/qbot.webp" alt="" data-step="4" loading="lazy">
-        <img src="assets/img/so-arm-set.webp" alt="" data-step="5" loading="lazy">
-        <img src="assets/img/forklift-amr.webp" alt="" data-step="6" loading="lazy">
-        <img src="assets/img/mentor-humanoid.webp" alt="" data-step="7" loading="lazy">
+        <canvas id="gl-build"></canvas>
+        <p class="journey__stage"><span id="jr-when">Day 01</span><b id="jr-name">First contact</b></p>
         <div class="journey__meter"><span>Capability</span><i><b id="jr-meter"></b></i></div>
       </div>
     </div>
@@ -727,7 +726,6 @@
   <div class="wrap">
     <div class="faculty__head">
       <h2 class="faculty__t" id="fac-t"><span class="reveal-line">The lab doesn’t</span> <span class="reveal-line">run itself.</span></h2>
-      <figure class="faculty__ph reveal"><img src="assets/img/mentor-humanoid.webp" alt="A mentor demonstrating a humanoid robot during faculty training" loading="lazy"></figure>
       <p class="faculty__sub reveal"><span class="serif-i red">Faculty capability</span> is infrastructure. Every lab is handed over with certified people who can run it after we leave.</p>
     </div>
     <ol class="faculty__chain">
@@ -740,17 +738,17 @@
     <div class="mentors">
       <p class="mentors__k">Industry mentor bench <span class="pv pv--co">Company-reported</span></p>
       <ul class="mentors__list">
-        <li><img src="assets/img/mentors/dhanuj.webp" alt="" loading="lazy"><b>Dhanuj</b><span>Hardware Engineer, Intel</span></li>
-        <li><img src="assets/img/mentors/pratik.webp" alt="" loading="lazy"><b>Pratik</b><span>Mechanical Design, Honeywell</span></li>
-        <li><img src="assets/img/mentors/adit.webp" alt="" loading="lazy"><b>Adit</b><span>ROS Developer, L&amp;T Technology Services</span></li>
-        <li><img src="assets/img/mentors/ashish.webp" alt="" loading="lazy"><b>Ashish</b><span>Design Lead, Addverb</span></li>
-        <li><img src="assets/img/mentors/gaurav.webp" alt="" loading="lazy"><b>Gaurav</b><span>Design Lead, Pricon</span></li>
-        <li><img src="assets/img/mentors/shekhar.webp" alt="" loading="lazy"><b>Shekhar</b><span>Electronics Lead Engineer</span></li>
-        <li><img src="assets/img/mentors/navneet.webp" alt="" loading="lazy"><b>Navneet</b><span>Automation &amp; AI Engineer</span></li>
-        <li><img src="assets/img/mentors/apurva.webp" alt="" loading="lazy"><b>Apurva</b><span>Embedded Developer</span></li>
-        <li><img src="assets/img/mentors/nivit.webp" alt="" loading="lazy"><b>Nivit</b><span>Project Assistant, IIT Delhi</span></li>
-        <li><img src="assets/img/mentors/ayushman.webp" alt="" loading="lazy"><b>Ayushman</b><span>Research Fellow, NIT Trichy</span></li>
-        <li><img src="assets/img/mentors/mohit.webp" alt="" loading="lazy"><b>Mohit</b><span>Course Developer, McMaster University</span></li>
+        <li><b>Dhanuj</b><span>Hardware Engineer, Intel</span></li>
+        <li><b>Pratik</b><span>Mechanical Design, Honeywell</span></li>
+        <li><b>Adit</b><span>ROS Developer, L&amp;T Technology Services</span></li>
+        <li><b>Ashish</b><span>Design Lead, Addverb</span></li>
+        <li><b>Gaurav</b><span>Design Lead, Pricon</span></li>
+        <li><b>Shekhar</b><span>Electronics Lead Engineer</span></li>
+        <li><b>Navneet</b><span>Automation &amp; AI Engineer</span></li>
+        <li><b>Apurva</b><span>Embedded Developer</span></li>
+        <li><b>Nivit</b><span>Project Assistant, IIT Delhi</span></li>
+        <li><b>Ayushman</b><span>Research Fellow, NIT Trichy</span></li>
+        <li><b>Mohit</b><span>Course Developer, McMaster University</span></li>
       </ul>
     </div>
   </div>
@@ -897,16 +895,16 @@
 
 <!-- ============================== FINAL VISION ============================== -->
 <section class="vision" id="vision" data-tone="dark" aria-labelledby="vs-t">
-  <div class="vision__bg parallax" aria-hidden="true"><img src="assets/img/quadrupeds.webp" alt="" loading="lazy"></div>
-  <div class="vision__bg vision__bg--2 parallax" aria-hidden="true"><img src="assets/img/tbot-maze.webp" alt="" loading="lazy"></div>
+  <div class="vision__bg" aria-hidden="true"><img src="assets/img/quadrupeds.webp" alt="" loading="lazy"></div>
+  <div class="vision__bg vision__bg--2" aria-hidden="true"><img src="assets/img/tbot-maze.webp" alt="" loading="lazy"></div>
   <div class="vision__veil" aria-hidden="true"></div>
   <div class="wrap vision__in">
     <h2 class="vision__t" id="vs-t">
-      <span class="reveal-line"><span class="serif-i">Karnataka’s</span> capability.</span>
-      <span class="reveal-line"><span class="serif-i">My Equation’s</span> delivery.</span>
-      <span class="reveal-line gold">One physical AI network.</span>
+      <span class="vl"><span class="serif-i">Karnataka’s</span> capability.</span>
+      <span class="vl"><span class="serif-i">My Equation’s</span> delivery.</span>
+      <span class="vl gold">One physical AI network.</span>
     </h2>
-    <p class="vision__p reveal">The objective is not to create another programme. It is to create a repeatable infrastructure through which Karnataka can build the engineers, machines and institutions required for the next era of intelligent industry.</p>
+    <p class="vision__p">The objective is not to create another programme. It is to create a repeatable infrastructure through which Karnataka can build the engineers, machines and institutions required for the next era of intelligent industry.</p>
   </div>
 </section>
 
@@ -939,7 +937,13 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/three@0.149.0/build/three.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
 <script src="assets/js/karnataka-map.js" defer></script>
 <script src="assets/js/site.js" defer></script>
+<script src="assets/js/scenes.js" defer></script>
+<script src="assets/js/story.js" defer></script>
 </body>
 </html>

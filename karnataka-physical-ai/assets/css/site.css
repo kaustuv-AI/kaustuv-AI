@@ -941,3 +941,97 @@ section.ivory,section.dark,.lab,.pilot,.risks,.proof{padding:clamp(96px,14vw,200
   .hero__aside,.hero__eyebrow,.hero__scroll,.strip figcaption{opacity:1}
   .ka-link{animation:none}
 }
+
+/* ===================================================================
+   STORY LAYER — 3D scenes, rail, scrubbed effects
+   =================================================================== */
+canvas{display:block}
+.gl canvas{width:100%;height:100%}
+
+/* chapter rule draws itself */
+.chapter{border-top:0;position:relative}
+.chapter::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:currentColor;opacity:.35;transform:scaleX(0);transform-origin:left;transition:transform 1.8s var(--ease)}
+.chapter.in::before{transform:scaleX(1)}
+
+/* narration words */
+.w{display:inline;transition:none}
+
+/* Ch01 stage */
+.gl--shift{position:absolute;right:0;top:8%;width:52%;height:66%;z-index:0;pointer-events:none;transition:opacity .8s var(--ease)}
+.shift__in{z-index:1}
+.gl-on .shift__lead,.gl-on .shift__verbs{max-width:56%}
+.gl-on .system__arm{display:none}
+.gl-on .system{padding-right:0}
+
+/* map */
+.map--3d .gl--map{position:relative;width:100%;aspect-ratio:4/5;max-height:78vh}
+.map--3d #ka-map{display:none}
+.gl--map{display:none}
+.map--3d .gl--map{display:block}
+.ka3-label{position:absolute;left:0;top:0;font:500 10.5px/1 var(--f-grot);letter-spacing:.14em;text-transform:uppercase;color:var(--on-dark-2);white-space:nowrap;padding:5px 7px;border:1px solid transparent;background:rgba(7,16,25,.55);cursor:pointer;will-change:transform;transition:color .3s,border-color .3s,background .3s}
+.ka3-label:hover{color:var(--on-dark)}
+.ka3-label.sel{color:var(--obsidian);background:var(--gold);border-color:var(--gold)}
+.ka3-label.kk.sel{background:var(--red-l);border-color:var(--red-l)}
+
+/* journey build */
+.journey__frame{background:radial-gradient(80% 60% at 50% 60%,#0E1C29,var(--obsidian) 75%)}
+.journey__frame canvas{position:absolute;inset:0;width:100%;height:100%}
+.journey__frame::before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(143,176,201,.05) 1px,transparent 1px) 0 0/32px 32px,linear-gradient(90deg,rgba(143,176,201,.05) 1px,transparent 1px) 0 0/32px 32px;pointer-events:none}
+.journey__stage{position:absolute;left:20px;top:18px;z-index:2;display:flex;flex-direction:column;gap:8px}
+.journey__stage span{font:500 10px/1 var(--f-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.journey__stage b{font:400 clamp(26px,2.4vw,40px)/1 var(--f-serif);color:var(--ivory);font-weight:400}
+.no-gl .journey__frame{background:url(../img/so-arm-set.webp) 50% 60%/cover}
+.journey__frame::after{z-index:1}
+
+/* proof with HD photography */
+.proof__cap{grid-column:9/12;align-self:end;font-size:14px;color:var(--on-dark-2);max-width:32ch;padding-bottom:8px}
+.proof__cap b{color:var(--on-dark);font-weight:600}
+.proof__img--wide{height:clamp(420px,86vh,980px);margin:0}
+.proof__img--wide img{height:100%}
+.proof__band--c{padding:0}
+.proof__band--c .proof__word{padding:0 var(--gut)}
+.proof__band--c figcaption{padding:0 var(--gut)}
+.has-gsap .proof__img img,.has-gsap .proof__img.in img,.has-gsap .proof__img:hover img{transition:none;transform:none}
+.proof__img img{image-rendering:auto}
+.plates__img{overflow:hidden;aspect-ratio:4/5;margin-bottom:18px;max-width:100%}
+.plates__img img{width:100%;height:100%;object-fit:cover;margin:0;filter:none}
+.plates__more{margin-top:40px;padding-top:18px;border-top:1px solid var(--line-dark);font-size:14px;color:var(--on-dark-2);display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline}
+.plates__more b{font:600 15px var(--f-grot);color:var(--on-dark);text-transform:uppercase;letter-spacing:.02em}
+.plates__more .mono{color:var(--gold);text-transform:uppercase;letter-spacing:.14em;font-size:10px}
+.gap__photo img{filter:grayscale(.35) contrast(1.08) brightness(.72)}
+.strip img{filter:grayscale(.25) contrast(1.06) brightness(.86)}
+
+/* faculty, typographic */
+.faculty__head{grid-template-rows:auto;align-items:end}
+.mentors__list li{display:flex;flex-direction:column;gap:4px;padding-top:12px;border-top:1px solid var(--line-light)}
+
+/* vision lines (driven by scroll) */
+.vl{display:block}
+.vision{min-height:100vh}
+
+/* story rail */
+.rail{position:fixed;left:clamp(14px,1.6vw,28px);bottom:28px;z-index:80;display:flex;align-items:flex-end;gap:12px;color:var(--on-dark);opacity:0;transform:translateY(8px);transition:opacity .6s var(--ease),transform .6s var(--ease),color .5s;pointer-events:none}
+.rail.on{opacity:1;transform:none}
+.rail[data-tone="light"]{color:var(--on-light)}
+.rail__n{font:500 12px/1 var(--f-mono);letter-spacing:.1em;color:var(--gold);writing-mode:vertical-rl;transform:rotate(180deg)}
+.rail[data-tone="light"] .rail__n{color:var(--red)}
+.rail__bar{position:relative;width:1px;height:90px;background:currentColor;opacity:.25;display:block}
+.rail__bar b{position:absolute;inset:0;background:currentColor;transform-origin:top;transform:scaleY(0)}
+.rail__t{font:500 10px/1 var(--f-mono);letter-spacing:.18em;text-transform:uppercase;writing-mode:vertical-rl;transform:rotate(180deg);opacity:.75;transition:opacity .22s,transform .22s}
+.rail.swap .rail__t,.rail.swap .rail__n{opacity:0}
+
+@media (max-width:1180px){.rail{display:none}}
+@media (max-width:980px){
+  .proof__cap{grid-column:2/-1;padding:0 var(--gut) 0 0;margin-top:16px}
+  .gl-on .shift__lead,.gl-on .shift__verbs{max-width:none}
+  .gl--shift{position:relative;right:auto;top:auto;width:100%;height:46vh;margin-bottom:-12vh}
+}
+@media (max-width:760px){
+  .gl--shift{display:none}
+  .gl-on .system__arm{display:block}
+  .map--3d .gl--map{aspect-ratio:4/5;max-height:none}
+  .proof__img--wide{height:62vh}
+}
+@media (prefers-reduced-motion:reduce){.rail{transition:none}}
+.proof__cap{align-self:start;padding-top:8px}
+.mentors__list li{align-items:flex-start;text-align:left}

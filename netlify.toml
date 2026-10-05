@@ -1,0 +1,9 @@
+# Netlify: serve the Karnataka Physical AI site as-is (static, no build step).
+[build]
+  publish = "karnataka-physical-ai"
+  command = ""
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"

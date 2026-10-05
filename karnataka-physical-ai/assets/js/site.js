@@ -12,6 +12,20 @@
   var NS = 'http://www.w3.org/2000/svg';
   var inr = function (n) { return Math.round(n).toLocaleString('en-IN'); };
 
+  /* Cached geometry: measure each element once, then derive positions from scrollY.
+     Re-measured on resize, load, font load and any change in page height. */
+  var GEO = new Map(), docH = 0;
+  function measure() { GEO.clear(); docH = Math.max(0, root.scrollHeight - innerHeight); }
+  function rectOf(el) {
+    var g = GEO.get(el);
+    if (!g) { var r = el.getBoundingClientRect(); g = { top: r.top + scrollY, height: r.height }; GEO.set(el, g); }
+    var t = g.top - scrollY;
+    return { top: t, bottom: t + g.height, height: g.height };
+  }
+  window.KA_RECT = rectOf;
+  window.KA_DOCH = function () { return docH; };
+  measure();
+
   function svgEl(tag, attrs, parent) {
     var el = doc.createElementNS(NS, tag);
     for (var k in attrs) el.setAttribute(k, attrs[k]);
@@ -80,15 +94,14 @@
     nav.classList.toggle('is-scrolled', y > 40);
     var tone = 'dark';
     for (var i = 0; i < tonedSections.length; i++) {
-      var r = tonedSections[i].getBoundingClientRect();
+      var r = rectOf(tonedSections[i]);
       if (r.top <= probe && r.bottom > probe) { tone = tonedSections[i].dataset.tone; break; }
     }
     if (!menu.hidden) tone = 'dark';
     nav.dataset.tone = tone;
-    var h = root.scrollHeight - innerHeight;
-    nav.style.setProperty('--p', h > 0 ? (y / h).toFixed(4) : 0);
+    nav.style.setProperty('--p', docH > 0 ? (y / docH).toFixed(4) : 0);
     var active = -1;
-    linkTargets.forEach(function (t, i) { if (t && t.getBoundingClientRect().top < innerHeight * 0.4) active = i; });
+    linkTargets.forEach(function (t, i) { if (t && rectOf(t).top < innerHeight * 0.4) active = i; });
     navLinks.forEach(function (a, i) { a.classList.toggle('is-active', i === active); });
   }
 
@@ -96,7 +109,7 @@
      Scroll progress helper for sticky sections
      ------------------------------------------------------------------ */
   function progressOf(sec) {
-    var r = sec.getBoundingClientRect(), total = r.height - innerHeight;
+    var r = rectOf(sec), total = r.height - innerHeight;
     return total > 0 ? clamp(-r.top / total, 0, 1) : (r.top < innerHeight * 0.5 ? 1 : 0);
   }
   function onAt(container, p) {
@@ -143,7 +156,7 @@
   function updateEco() {
     var p = (reduce || mqMid.matches) ? 1 : progressOf(eco);
     if (mqMid.matches && !reduce) {
-      var r = eco.getBoundingClientRect();
+      var r = rectOf(eco);
       p = clamp((innerHeight - r.top) / (innerHeight * 1.1), 0, 1);
     }
     eco.style.setProperty('--strike', clamp((p - 0.12) / 0.2, 0, 1).toFixed(3));
@@ -288,7 +301,7 @@
       var pmap = drawMap(pm);
       var zones = [[[M.c.Bengaluru[0] - 30, M.c.Bengaluru[1] - 30], 'Near Bengaluru', false], [[(M.c.Kalaburagi[0] + M.c.Raichur[0]) / 2, (M.c.Kalaburagi[1] + M.c.Raichur[1]) / 2], 'Kalyana Karnataka', true]];
       zones.forEach(function (z) {
-        var g = svgEl('g', { 'class': 'ka-node sel' + (z[2] ? ' kk' : ''), transform: 'translate(' + z[0] + ')' }, pmap.svg);
+        var g = svgEl('g', { 'class': 'ka-node ka-static' + (z[2] ? ' kk' : ''), transform: 'translate(' + z[0] + ')' }, pmap.svg);
         svgEl('circle', { r: 70, fill: z[2] ? 'rgba(224,84,91,.10)' : 'rgba(227,179,65,.10)', stroke: z[2] ? '#E0545B' : '#E3B341', 'stroke-dasharray': '6 6' }, g);
         var t = svgEl('text', { y: 12, 'text-anchor': 'middle', style: 'font-size:38px;fill:#F5F1E8;stroke-width:0' }, g); t.textContent = '2';
         var l = svgEl('text', { y: -84, 'text-anchor': 'middle' }, g); l.textContent = z[1].toUpperCase();
@@ -520,7 +533,7 @@
     if (reduce) return;
     if (scrollY < innerHeight * 1.2) heroStrips.style.transform = 'translate3d(0,' + (scrollY * 0.25).toFixed(1) + 'px,0)';
     plx.forEach(function (img) {
-      var r = img.parentNode.getBoundingClientRect();
+      var r = rectOf(img.parentNode);
       if (r.bottom < 0 || r.top > innerHeight) return;
       var k = (r.top + r.height / 2 - innerHeight / 2) / innerHeight;
       img.style.transform = 'translate3d(0,' + (k * -6).toFixed(2) + '%,0) scale(1.12)';
@@ -537,10 +550,19 @@
   }
   function req() { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }
   addEventListener('scroll', req, { passive: true });
-  addEventListener('resize', function () { sizeRoad(); req(); });
-  addEventListener('load', function () { sizeRoad(); req(); });
-  if (doc.fonts && doc.fonts.ready) doc.fonts.ready.then(function () { sizeRoad(); req(); });
-  sizeRoad(); frame();
+  function relayout() { sizeRoad(); measure(); req(); }
+  addEventListener('resize', relayout);
+  addEventListener('load', relayout);
+  if (doc.fonts && doc.fonts.ready) doc.fonts.ready.then(relayout);
+  // any change in page height (panels, lazy images, pin spacers) invalidates the cache
+  var lastH = 0, roT = 0;
+  new ResizeObserver(function () {
+    var h = doc.body.scrollHeight; if (Math.abs(h - lastH) < 2) return; lastH = h;
+    measure(); req();
+    clearTimeout(roT); roT = setTimeout(function () { if (window.ScrollTrigger) window.ScrollTrigger.refresh(); }, 250);
+  }).observe(doc.body);
+  window.KA_MEASURE = function () { measure(); req(); };
+  sizeRoad(); measure(); frame();
   window.KA_PROGRESS = progressOf;
   window.KA_TICK = req;
 })();

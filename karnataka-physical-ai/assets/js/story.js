@@ -19,20 +19,24 @@
   });
   var vision = $('#vision'); if (vision) marks.push({ el: vision, n: '12', t: 'One network' });
   var lastMark = -1;
+  var railQueued = false;
+  function queueRail() { if (!railQueued) { railQueued = true; requestAnimationFrame(updateRail); } }
   function updateRail() {
+    railQueued = false;
+    var rect = window.KA_RECT || function (el) { return el.getBoundingClientRect(); };
     var mid = innerHeight * 0.5, cur = 0;
-    marks.forEach(function (m, i) { if (m.el && m.el.getBoundingClientRect().top < mid) cur = i; });
+    marks.forEach(function (m, i) { if (m.el && rect(m.el).top < mid) cur = i; });
     if (cur !== lastMark) {
       lastMark = cur;
       rail.classList.add('swap');
       setTimeout(function () { railN.textContent = marks[cur].n; railT.textContent = marks[cur].t; rail.classList.remove('swap'); }, reduce ? 0 : 220);
     }
-    var h = root.scrollHeight - innerHeight;
+    var h = window.KA_DOCH ? window.KA_DOCH() : root.scrollHeight - innerHeight;
     railB.style.transform = 'scaleY(' + (h > 0 ? scrollY / h : 0).toFixed(4) + ')';
     rail.classList.toggle('on', scrollY > innerHeight * 0.6);
     var navTone = $('#nav').dataset.tone; rail.dataset.tone = navTone;
   }
-  addEventListener('scroll', updateRail, { passive: true });
+  addEventListener('scroll', queueRail, { passive: true });
   updateRail();
 
   /* ---------- word-by-word narration ---------- */
@@ -64,8 +68,8 @@
   /* ---------- smooth scroll ---------- */
   var lenis = null;
   if (window.Lenis && !matchMedia('(pointer: coarse)').matches) {
-    lenis = new window.Lenis({ lerp: 0.085, smoothWheel: true, wheelMultiplier: 0.95 });
-    lenis.on('scroll', function () { ST.update(); if (window.KA_TICK) window.KA_TICK(); });
+    lenis = new window.Lenis({ lerp: 0.12, smoothWheel: true, wheelMultiplier: 1 });
+    lenis.on('scroll', ST.update);
     G.ticker.add(function (time) { lenis.raf(time * 1000); });
     G.ticker.lagSmoothing(0);
     $$('a[href^="#"]').forEach(function (a) {
@@ -82,8 +86,22 @@
     $$(sel).forEach(function (el) {
       var w = splitWords(el);
       G.fromTo(w, { opacity: 0.16 }, { opacity: 1, ease: 'none', stagger: 0.04,
-        scrollTrigger: { trigger: el, start: 'top 82%', end: 'bottom 48%', scrub: 0.6 } });
+        scrollTrigger: { trigger: el, start: 'top 82%', end: 'bottom 48%', scrub: true } });
     });
+  });
+
+  /* ---------- background colour flows from chapter to chapter ----------
+     Each chapter scrolls in wearing the previous chapter's colour and blends to its own,
+     so text always sits on its own chapter's ground. */
+  var chapters = $$('main > section'), prevBg = null;
+  chapters.forEach(function (sec) {
+    var own = getComputedStyle(sec).backgroundColor;
+    if (prevBg && own !== prevBg && own !== 'rgba(0, 0, 0, 0)') {
+      G.fromTo(sec, { backgroundColor: prevBg }, { backgroundColor: own, ease: 'none', immediateRender: false,
+        scrollTrigger: { trigger: sec, start: 'top 98%', end: 'top 42%', scrub: true } });
+      G.set(sec, { backgroundColor: own });
+    }
+    if (own !== 'rgba(0, 0, 0, 0)') prevBg = own;
   });
 
   /* ---------- hero exit ---------- */
@@ -93,18 +111,11 @@
     G.to(s, { yPercent: [-10, -22, -6, -16][i] || -10, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
   });
 
-  /* ---------- ivory chapters open like a page ---------- */
-  $$('section.ivory').forEach(function (sec) {
-    G.fromTo(sec, { clipPath: 'inset(7% 5% 0% 5%)' }, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'none',
-      scrollTrigger: { trigger: sec, start: 'top bottom', end: 'top 25%', scrub: true } });
-  });
-
   /* ---------- photography ---------- */
+  // GPU-only: the frame clips (overflow hidden), the photo drifts and settles inside it
   $$('.proof__img, .gap__photo').forEach(function (f) {
     var img = $('img', f);
-    G.fromTo(f, { clipPath: 'inset(14% 10% 14% 10%)' }, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'none',
-      scrollTrigger: { trigger: f, start: 'top 95%', end: 'top 35%', scrub: true } });
-    G.fromTo(img, { scale: 1.28, yPercent: -4 }, { scale: 1.02, yPercent: 4, ease: 'none',
+    G.fromTo(img, { scale: 1.22, yPercent: -5 }, { scale: 1.04, yPercent: 5, ease: 'none', force3D: true,
       scrollTrigger: { trigger: f, start: 'top bottom', end: 'bottom top', scrub: true } });
   });
   $$('.proof__word').forEach(function (w, i) {
@@ -129,7 +140,7 @@
   /* ---------- final vision: pinned, line by line ---------- */
   if (vision && innerWidth > 760) {
     var lines = $$('.vision__t .vl'), bgs = $$('.vision__bg img'), para = $('.vision__p');
-    var tl = G.timeline({ scrollTrigger: { trigger: vision, start: 'top top', end: '+=170%', pin: true, scrub: 0.8 } });
+    var tl = G.timeline({ scrollTrigger: { trigger: vision, start: 'top top', end: '+=80%', pin: true, scrub: true } });
     tl.fromTo(bgs, { scale: 1.25 }, { scale: 1.02, duration: 3, ease: 'none' }, 0);
     lines.forEach(function (l, i) {
       tl.fromTo(l, { yPercent: 70, opacity: 0, clipPath: 'inset(0 0 100% 0)' }, { yPercent: 0, opacity: 1, clipPath: 'inset(0 0 -10% 0)', duration: 0.6, ease: 'power2.out' }, 0.2 + i * 0.75);
@@ -137,6 +148,7 @@
     tl.fromTo(para, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6 }, 2.5);
   }
 
+  ST.addEventListener('refresh', function () { if (window.KA_MEASURE) window.KA_MEASURE(); });
   addEventListener('load', function () { ST.refresh(); });
   if (doc.fonts && doc.fonts.ready) doc.fonts.ready.then(function () { ST.refresh(); });
 })();

@@ -62,10 +62,10 @@
 <!-- ============================== HERO ============================== -->
 <section class="hero" id="top" data-tone="dark" aria-label="Opening">
   <div class="hero__strips" aria-hidden="true">
-    <figure class="strip" style="--i:0"><img src="assets/img/tbot-maze.webp" alt="" fetchpriority="high" style="object-position:42% 60%"><figcaption>Fig. 01 — T-Bot fleet · maze arena</figcaption></figure>
-    <figure class="strip" style="--i:1"><img src="assets/img/so-arm-set.webp" alt="" style="object-position:50% 55%"><figcaption>Fig. 02 — S/O Arm · 6-DOF set</figcaption></figure>
-    <figure class="strip" style="--i:2"><img src="assets/img/quadrupeds.webp" alt="" style="object-position:55% 62%"><figcaption>Fig. 03 — Quadruped platforms</figcaption></figure>
-    <figure class="strip" style="--i:3"><img src="assets/img/forklift-amr.webp" alt="" style="object-position:55% 65%"><figcaption>Fig. 04 — Forklift AMR</figcaption></figure>
+    <figure class="strip" style="--i:0"><img decoding="async" src="assets/img/tbot-maze.webp" alt="" fetchpriority="high" style="object-position:42% 60%"><figcaption>Fig. 01 — T-Bot fleet · maze arena</figcaption></figure>
+    <figure class="strip" style="--i:1"><img decoding="async" src="assets/img/so-arm-set.webp" alt="" style="object-position:50% 55%"><figcaption>Fig. 02 — S/O Arm · 6-DOF set</figcaption></figure>
+    <figure class="strip" style="--i:2"><img decoding="async" src="assets/img/quadrupeds.webp" alt="" style="object-position:55% 62%"><figcaption>Fig. 03 — Quadruped platforms</figcaption></figure>
+    <figure class="strip" style="--i:3"><img decoding="async" src="assets/img/forklift-amr.webp" alt="" style="object-position:55% 65%"><figcaption>Fig. 04 — Forklift AMR</figcaption></figure>
   </div>
   <div class="hero__veil" aria-hidden="true"></div>
 
@@ -198,6 +198,19 @@
       </div>
     </div>
 
+    <div class="viz-row">
+      <figure class="viz reveal" id="viz-jobs">
+        <figcaption><p class="viz__k">Where the jobs are coming from</p><p class="viz__s">Jobs targeted by State policy, in lakh. Targets, not outcomes. <span class="pv pv--ver">Verified</span></p></figcaption>
+        <div class="bars" data-rows='[["Industrial Policy 2025–30",20,"20 lakh","₹7.5 lakh crore of targeted industrial investment by 2030"],["GCC Policy 2024–29",3.5,"3.5 lakh","Global capability centres"],["Clean Mobility 2025–30",1,"1 lakh","₹50,000 crore in clean mobility"]]'></div>
+        <p class="viz__note">The largest target is industrial: work learned on machines, not screens.</p>
+      </figure>
+      <figure class="viz reveal" id="viz-econ">
+        <figcaption><p class="viz__k">An industrial base to build on</p><p class="viz__s">Economy by sector, share of GSVA. <span class="pv pv--ver">Verified</span></p></figcaption>
+        <div class="comp" data-rows='[["Services",69.8],["Industry",19.4],["Agriculture",10.8]]'></div>
+        <p class="viz__note">Manufacturing alone is 11.33% of State GDP. 19.49 lakh people work in registered factories.</p>
+      </figure>
+    </div>
+
     <div class="motion">
       <p class="motion__k">Institutions already in motion</p>
       <ol class="motion__list">
@@ -225,7 +238,7 @@
 
   <div class="gap__split">
     <figure class="gap__photo reveal">
-      <img src="assets/img/quadrupeds.webp" alt="Two quadruped robots built in the My Equation lab" loading="lazy" width="1054" height="1400" style="object-position:55% 62%">
+      <img decoding="async" src="assets/img/quadrupeds.webp" alt="Two quadruped robots built in the My Equation lab" loading="lazy" width="1054" height="1400" style="object-position:55% 62%">
       <blockquote class="gap__quote">
         <p>“I know Python.<br>I know machine learning.</p>
         <p class="gold">I’ve never built a&nbsp;robot.”</p>
@@ -256,6 +269,16 @@
     <div class="gap__fig reveal">
       <p class="gap__n red-l"><span data-count="1615" data-fmt="in">1,615</span></p>
       <p>completed skill training.</p>
+    </div>
+    <div class="gap__viz">
+      <figure class="viz viz--dark reveal" id="viz-income">
+        <figcaption><p class="viz__k">The regional gap</p><p class="viz__s">Per capita income by division, 2024–25, ₹ lakh. Dashed line: state average ₹3.86 lakh. <span class="pv pv--ver">Verified</span></p></figcaption>
+        <div class="bars" data-ref="3.86" data-ref-label="State avg 3.86" data-rows='[["Mysuru division",4.06,"₹4.06 L"],["Belagavi division",2.26,"₹2.26 L"],["Kalaburagi division",1.90,"₹1.90 L","Kalyana Karnataka",1]]'></div>
+      </figure>
+      <figure class="viz viz--dark reveal" id="viz-hdi">
+        <figcaption><p class="viz__k">Human development, by district</p><p class="viz__s">District Human Development Index, scale 0.50–0.75. <span class="pv pv--ver">Verified</span></p></figcaption>
+        <div class="bars bars--dot" data-min="0.5" data-max="0.75" data-rows='[["Bengaluru Urban",0.738,"0.738","Produces 40.4% of State GDP"],["Raichur",0.562,"0.562","Kalyana Karnataka",1],["Kalaburagi",0.539,"0.539","Kalyana Karnataka",1],["Yadgir",0.538,"0.538","Kalyana Karnataka",1]]'></div>
+      </figure>
     </div>
     <p class="gap__src"><span class="pv pv--ver">Verified</span>Yuva Nidhi, ₹3,000 a month to unemployed graduates · State programme data, 2025–26. The opportunity: turn allowance into employable skill, on real equipment.</p>
   </div>
@@ -347,7 +370,7 @@
       </div>
       <div class="map__canvas">
         <div class="map__stamp"><span class="pv pv--pro">Proposed network</span> Indicative locations — none approved</div>
-        <div class="gl gl--map" aria-hidden="true"><canvas id="gl-map"></canvas></div>
+        <div class="gl gl--map" aria-hidden="true"><canvas id="gl-map"></canvas><p class="gl-hint">Drag to rotate</p></div>
         <div id="ka-map" class="map__svg" aria-hidden="true"></div>
       </div>
       <aside class="map__panel" aria-live="polite">
@@ -407,30 +430,30 @@
   <h2 class="sr" id="proof-t">Evidence: real robots built and run by My Equation</h2>
 
   <div class="proof__band proof__band--a">
-    <figure class="proof__img proof__img--xl"><img src="assets/img/so-arm-set.webp" alt="A set of 6-DOF S/O Arm manipulators printed and assembled in-house" loading="lazy" style="object-position:50% 62%"></figure>
+    <figure class="proof__img proof__img--xl"><img decoding="async" src="assets/img/so-arm-set.webp" alt="A set of 6-DOF S/O Arm manipulators printed and assembled in-house" loading="lazy" style="object-position:50% 62%"></figure>
     <p class="proof__word"><span class="reveal-line">Engineered.</span></p>
     <p class="proof__cap"><b>S/O Arm classroom set.</b> Six-axis arms designed, printed and assembled in-house. One per learner team, ±0.1 mm repeatability.</p>
   </div>
 
   <div class="proof__band proof__band--b">
-    <figure class="proof__img proof__img--tall"><img src="assets/img/quadrupeds.webp" alt="Two quadruped robot platforms on a workbench" loading="lazy" style="object-position:55% 62%"><figcaption><b>Quadruped platforms.</b> Legged robots for gait, balance and control experiments.</figcaption></figure>
+    <figure class="proof__img proof__img--tall"><img decoding="async" src="assets/img/quadrupeds.webp" alt="Two quadruped robot platforms on a workbench" loading="lazy" style="object-position:55% 62%"><figcaption><b>Quadruped platforms.</b> Legged robots for gait, balance and control experiments.</figcaption></figure>
     <p class="proof__word proof__word--r"><span class="reveal-line">Built.</span></p>
-    <figure class="proof__img proof__img--tall2"><img src="assets/img/forklift-amr.webp" alt="Aluminium-frame forklift autonomous mobile robot with a lead-screw lift" loading="lazy" style="object-position:55% 65%"><figcaption><b>Forklift AMR.</b> Aluminium frame, lead-screw lift for payload handling.</figcaption></figure>
+    <figure class="proof__img proof__img--tall2"><img decoding="async" src="assets/img/forklift-amr.webp" alt="Aluminium-frame forklift autonomous mobile robot with a lead-screw lift" loading="lazy" style="object-position:55% 65%"><figcaption><b>Forklift AMR.</b> Aluminium frame, lead-screw lift for payload handling.</figcaption></figure>
   </div>
 
   <div class="proof__band proof__band--c">
     <p class="proof__word"><span class="reveal-line">Deployed.</span></p>
-    <figure class="proof__img proof__img--wide"><img src="assets/img/tbot-maze.webp" alt="Two T-Bot robots navigating an AprilTag-marked maze arena on their own" loading="lazy" style="object-position:45% 68%"><figcaption><b>T-Bot fleet, running autonomously.</b> LiDAR robots mapping and navigating an AprilTag-marked warehouse layout.</figcaption></figure>
+    <figure class="proof__img proof__img--wide"><img decoding="async" src="assets/img/tbot-maze.webp" alt="Two T-Bot robots navigating an AprilTag-marked maze arena on their own" loading="lazy" style="object-position:45% 68%"><figcaption><b>T-Bot fleet, running autonomously.</b> LiDAR robots mapping and navigating an AprilTag-marked warehouse layout.</figcaption></figure>
   </div>
 
   <div class="wrap plates">
     <h3 class="plates__t"><span class="reveal-line">Real robots.</span> <span class="reveal-line serif-i gold">Real experience.</span></h3>
     <p class="plates__k"><span class="pv pv--co">Company-reported specifications</span> Education-grade platforms designed, printed and run by My Equation.</p>
     <ol class="plates__list">
-      <li class="reveal"><div class="plates__img"><img src="assets/img/tbot-maze.webp" alt="T-Bot" loading="lazy" style="object-position:22% 82%"></div><span class="plates__no">Plate 01</span><b>T-Bot</b><span class="mono">ROS 2 mapping · LiDAR + IMU · Jetson</span></li>
-      <li class="reveal"><div class="plates__img"><img src="assets/img/so-arm-set.webp" alt="S/O Arm manipulators" loading="lazy" style="object-position:45% 62%"></div><span class="plates__no">Plate 02</span><b>S/O Arm</b><span class="mono">6-DOF · ±0.1 mm repeatability</span></li>
-      <li class="reveal"><div class="plates__img"><img src="assets/img/quadrupeds.webp" alt="Quadruped Q-Bot" loading="lazy" style="object-position:62% 62%"></div><span class="plates__no">Plate 03</span><b>Quadruped &amp; Q-Bot</b><span class="mono">ROS 2 legged gait · 1 kHz PID / LQR</span></li>
-      <li class="reveal"><div class="plates__img"><img src="assets/img/forklift-amr.webp" alt="Forklift AMR" loading="lazy" style="object-position:55% 66%"></div><span class="plates__no">Plate 04</span><b>Forklift AMR</b><span class="mono">Aluminium frame · lead-screw lift</span></li>
+      <li class="reveal"><div class="plates__img"><img decoding="async" src="assets/img/tbot-maze.webp" alt="T-Bot" loading="lazy" style="object-position:22% 82%"></div><span class="plates__no">Plate 01</span><b>T-Bot</b><span class="mono">ROS 2 mapping · LiDAR + IMU · Jetson</span></li>
+      <li class="reveal"><div class="plates__img"><img decoding="async" src="assets/img/so-arm-set.webp" alt="S/O Arm manipulators" loading="lazy" style="object-position:45% 62%"></div><span class="plates__no">Plate 02</span><b>S/O Arm</b><span class="mono">6-DOF · ±0.1 mm repeatability</span></li>
+      <li class="reveal"><div class="plates__img"><img decoding="async" src="assets/img/quadrupeds.webp" alt="Quadruped Q-Bot" loading="lazy" style="object-position:62% 62%"></div><span class="plates__no">Plate 03</span><b>Quadruped &amp; Q-Bot</b><span class="mono">ROS 2 legged gait · 1 kHz PID / LQR</span></li>
+      <li class="reveal"><div class="plates__img"><img decoding="async" src="assets/img/forklift-amr.webp" alt="Forklift AMR" loading="lazy" style="object-position:55% 66%"></div><span class="plates__no">Plate 04</span><b>Forklift AMR</b><span class="mono">Aluminium frame · lead-screw lift</span></li>
     </ol>
     <p class="plates__more"><span class="mono">Also in the fleet</span> <b>Campus Robot</b> LiDAR + SLAM · 15 kg payload · 8 h runtime</p>
   </div>
@@ -704,6 +727,7 @@
     <div class="journey__media" aria-hidden="true">
       <div class="journey__frame">
         <canvas id="gl-build"></canvas>
+        <p class="gl-hint" aria-hidden="true">Drag to rotate</p>
         <p class="journey__stage"><span id="jr-when">Day 01</span><b id="jr-name">First contact</b></p>
         <div class="journey__meter"><span>Capability</span><i><b id="jr-meter"></b></i></div>
       </div>
@@ -855,6 +879,36 @@
       </tfoot>
     </table>
     <p class="cost__per reveal">At the ceiling, roughly <b>₹36,000 per learner</b> for 480 learners — and the State keeps four working labs and certified faculty.</p>
+
+    <div class="sim reveal" id="sim">
+      <div class="sim__head">
+        <p class="eyebrow eyebrow--light"><span class="rule"></span>Interactive</p>
+        <h3 class="sim__t">Play with <span class="serif-i red">the pilot.</span></h3>
+        <p class="sim__lede">Change the number of labs, learners per lab and months of delivery. The cost and reach update with the same basis as the ledger above. <span class="pv pv--asm">Assumption</span></p>
+      </div>
+      <div class="sim__grid">
+        <form class="sim__controls" id="sim-form" onsubmit="return false">
+          <div class="sim__ctl"><label for="sim-labs">Labs <output id="sim-labs-o" for="sim-labs">4</output></label><input type="range" id="sim-labs" min="1" max="12" step="1" value="4"></div>
+          <div class="sim__ctl"><label for="sim-seats">Learners per lab <output id="sim-seats-o" for="sim-seats">120</output></label><input type="range" id="sim-seats" min="60" max="240" step="30" value="120"></div>
+          <div class="sim__ctl"><label for="sim-months">Months of delivery <output id="sim-months-o" for="sim-months">3.3</output></label><input type="range" id="sim-months" min="1" max="12" step="0.1" value="3.3"></div>
+          <button type="button" class="sim__reset" id="sim-reset">Reset to the proposed pilot</button>
+          <p class="sim__fine">Capex held at ₹8–16 L per compact lab. Delivery at the full-hub ceiling of ₹8.26 L per lab-month. Before taxes, AMC and independent assessment.</p>
+        </form>
+        <div class="sim__out" aria-live="polite">
+          <div class="sim__dots" id="sim-dots" aria-hidden="true"></div>
+          <p class="sim__legend" aria-hidden="true"><i></i> one square = 10 learners</p>
+          <dl class="sim__nums">
+            <div><dt>Learners</dt><dd id="sim-learners">480</dd></div>
+            <div><dt>Lab capex</dt><dd id="sim-capex">₹32–64 L</dd></div>
+            <div><dt>Delivery ceiling</dt><dd id="sim-delivery">₹1.09 Cr</dd></div>
+            <div class="sim__total"><dt>Total ceiling</dt><dd id="sim-total">₹1.73 Cr</dd></div>
+            <div><dt>Per learner</dt><dd id="sim-per">₹36,042</dd></div>
+          </dl>
+          <div class="sim__split" aria-hidden="true"><i id="sim-split-a"></i><i id="sim-split-b"></i></div>
+          <p class="sim__splitl" aria-hidden="true"><span><i class="sw sw--a"></i>Lab capex (upper)</span><span><i class="sw sw--b"></i>Delivery ceiling</span></p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -895,8 +949,8 @@
 
 <!-- ============================== FINAL VISION ============================== -->
 <section class="vision" id="vision" data-tone="dark" aria-labelledby="vs-t">
-  <div class="vision__bg" aria-hidden="true"><img src="assets/img/quadrupeds.webp" alt="" loading="lazy"></div>
-  <div class="vision__bg vision__bg--2" aria-hidden="true"><img src="assets/img/tbot-maze.webp" alt="" loading="lazy"></div>
+  <div class="vision__bg" aria-hidden="true"><img decoding="async" src="assets/img/quadrupeds.webp" alt="" loading="lazy"></div>
+  <div class="vision__bg vision__bg--2" aria-hidden="true"><img decoding="async" src="assets/img/tbot-maze.webp" alt="" loading="lazy"></div>
   <div class="vision__veil" aria-hidden="true"></div>
   <div class="wrap vision__in">
     <h2 class="vision__t" id="vs-t">
@@ -944,6 +998,7 @@
 <script src="assets/js/karnataka-map.js" defer></script>
 <script src="assets/js/site.js" defer></script>
 <script src="assets/js/scenes.js" defer></script>
+<script src="assets/js/viz.js" defer></script>
 <script src="assets/js/story.js" defer></script>
 </body>
 </html>

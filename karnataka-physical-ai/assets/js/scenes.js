@@ -26,7 +26,7 @@
     var self = this;
     this.canvas = canvas; this.host = canvas.parentElement;
     this.renderer = new T.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
     this.renderer.setClearColor(0x000000, 0);
     this.scene = new T.Scene();
     this.camera = new T.PerspectiveCamera(fov || 35, 1, 0.1, 200);
@@ -54,8 +54,20 @@
     return g;
   }
   function progressOf(el) {
-    var r = el.getBoundingClientRect(), total = r.height - innerHeight;
+    var r = window.KA_RECT ? window.KA_RECT(el) : el.getBoundingClientRect(), total = r.height - innerHeight;
     return total > 0 ? clamp(-r.top / total, 0, 1) : clamp((innerHeight - r.top) / (innerHeight + r.height), 0, 1);
+  }
+
+  /* ---------- drag to rotate (horizontal drag, with inertia) ---------- */
+  function dragYaw(canvas) {
+    var st = { yaw: 0, v: 0, down: false, x: 0 };
+    canvas.style.touchAction = 'pan-y';
+    canvas.addEventListener('pointerdown', function (e) { st.down = true; st.x = e.clientX; st.v = 0; canvas.setPointerCapture(e.pointerId); canvas.classList.add('dragging'); });
+    canvas.addEventListener('pointermove', function (e) { if (!st.down) return; var dx = e.clientX - st.x; st.x = e.clientX; st.v = dx * 0.006; st.yaw += st.v; });
+    function up() { st.down = false; canvas.classList.remove('dragging'); }
+    canvas.addEventListener('pointerup', up); canvas.addEventListener('pointercancel', up);
+    st.step = function () { if (!st.down) { st.yaw += st.v; st.v *= 0.92; } return st.yaw; };
+    return st;
   }
 
   /* ---------- robot arm (shared) ---------- */
@@ -242,14 +254,14 @@
 
     var sel = window.KA_REGION || 'Bengaluru';
     doc.addEventListener('map:select', function (e) { sel = e.detail; });
-    var look = new T.Vector3(0, 0, 0.4), tmp = new T.Vector3(), t0 = performance.now();
+    var look = new T.Vector3(0, 0, 0.4), tmp = new T.Vector3(), t0 = performance.now(), drag = dragYaw(canvas);
 
     st.update = function (now) {
       var t = reduce ? 0 : (now - t0) / 1000;
-      var r = mapSec.getBoundingClientRect();
+      var r = window.KA_RECT ? window.KA_RECT(mapSec) : mapSec.getBoundingClientRect();
       var p = reduce ? 1 : clamp((innerHeight - r.top) / (innerHeight * 1.05), 0, 1);
       var drift = reduce ? 0 : Math.sin(t * 0.15) * 0.06;
-      var az = -0.42 + p * 0.38 + drift, pol = 0.86 - p * 0.12, R = 11.6;
+      var az = -0.42 + p * 0.38 + drift + drag.step(), pol = 0.86 - p * 0.12, R = 11.6;
       var sn = nodes[sel];
       tmp.set(0, 0, 0.4); if (sn) tmp.lerp(sn.pos, 0.28);
       look.lerp(tmp, 0.06);
@@ -359,7 +371,7 @@
     var step = window.KA_STEP || 0, stepT = performance.now();
     doc.addEventListener('journey:step', function (e) { if (e.detail !== step) { step = e.detail; stepT = performance.now(); } });
     var t0 = performance.now(), look = new T.Vector3(0, 0.6, 0), lookTo = new T.Vector3(), ivory = new T.Color(COL.ivory), gold = new T.Color(COL.gold);
-    var tipW = new T.Vector3();
+    var tipW = new T.Vector3(), drag = dragYaw(canvas);
 
     st.update = function (now) {
       var t = reduce ? 2 : (now - t0) / 1000, ts = reduce ? 2 : (now - stepT) / 1000;
@@ -424,7 +436,7 @@
       // camera
       lookTo.set(step === 2 ? 1.4 : bot.position.x * 0.5, 0.6, step === 2 ? -0.3 : bot.position.z * 0.5);
       look.lerp(lookTo, 0.05);
-      var ang = (reduce ? 0.7 : t * (step === 7 ? 0.35 : 0.12)) + 0.6, R = step === 2 ? 6.4 : (step >= 3 ? 5.6 : 4.4);
+      var ang = (reduce ? 0.7 : t * (step === 7 ? 0.35 : 0.12)) + 0.6 + drag.step(), R = step === 2 ? 6.4 : (step >= 3 ? 5.6 : 4.4);
       st.camera.position.set(look.x + Math.sin(ang) * R, 2.3 + (step >= 3 ? 0.9 : 0), look.z + Math.cos(ang) * R);
       st.camera.lookAt(look);
       return true;
